@@ -1,4 +1,5 @@
-import data from "../data.json";
+import fs from "fs";
+import path from "path";
 
 export default function handler(req, res) {
   const num = req.query.num;
@@ -9,6 +10,10 @@ export default function handler(req, res) {
       message: "Please provide a number"
     });
   }
+
+  const filePath = path.join(process.cwd(), "data.json");
+  const rawData = fs.readFileSync(filePath);
+  const data = JSON.parse(rawData);
 
   if (data[num]) {
     return res.json({
